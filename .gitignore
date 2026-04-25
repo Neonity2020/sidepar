@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Rust build
+src-tauri/target/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Generated
+src-tauri/gen/

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SidePar</title>
+  <link rel="stylesheet" href="styles/index.css" />
+</head>
+<body>
+  <div id="panel-container" class="panel-container">
+    <div class="panel-header" data-tauri-drag-region>
+      <div class="app-title">
+        <span class="app-icon">📋</span>
+        <span>SidePar</span>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="search-input" class="search-input" placeholder="搜索..." />
+    </div>
+
+    <div class="tabs">
+      <button id="tab-history" class="tab active" data-tab="history">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>历史记录</span>
+      </button>
+      <button id="tab-prompts" class="tab" data-tab="prompts">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>提示词</span>
+      </button>
+    </div>
+
+    <div id="content-history" class="content-area active">
+      <div id="history-list" class="item-list">
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <p>暂无剪贴板记录</p>
+          <p class="empty-hint">复制任意文本后将自动出现在这里</p>
+        </div>
+      </div>
+      <div class="content-footer">
+        <button id="btn-clear-history" class="footer-btn danger">清空历史</button>
+      </div>
+    </div>
+
+    <div id="content-prompts" class="content-area">
+      <div class="category-bar">
+        <div id="category-pills" class="category-pills">
+          <button class="category-pill active" data-category="all">全部</button>
+        </div>
+        <button id="btn-manage-categories" class="icon-btn small" title="管理分类">⋯</button>
+      </div>
+      <div id="prompts-list" class="item-list">
+        <div class="empty-state">
+          <div class="empty-icon">✨</div>
+          <p>暂无提示词</p>
+          <p class="empty-hint">点击下方按钮添加常用提示词</p>
+        </div>
+      </div>
+      <div class="content-footer">
+        <button id="btn-add-prompt" class="footer-btn primary">+ 新建提示词</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prompt Modal -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">新建提示词</h3>
+        <button id="btn-close-modal" class="icon-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="prompt-title">标题</label>
+          <input type="text" id="prompt-title" placeholder="如：翻译助手" />
+        </div>
+        <div class="form-group">
+          <label for="prompt-category">分类</label>
+          <select id="prompt-category"><option value="">未分类</option></select>
+        </div>
+        <div class="form-group">
+          <label for="prompt-content">内容</label>
+          <textarea id="prompt-content" rows="8" placeholder="输入提示词内容..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-cancel-modal" class="modal-btn secondary">取消</button>
+        <button id="btn-save-prompt" class="modal-btn primary">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Modal -->
+  <div id="category-modal-overlay" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>管理分类</h3>
+        <button id="btn-close-cat-modal" class="icon-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="category-list" class="category-manage-list"></div>
+        <div class="add-category-row">
+          <input type="text" id="new-category-name" placeholder="新分类名称" />
+          <input type="color" id="new-category-color" value="#8B5CF6" />
+          <button id="btn-add-category" class="modal-btn primary small">添加</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/app.js" type="module"></script>
+</body>
+</html>
