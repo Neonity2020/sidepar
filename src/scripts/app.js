@@ -15,6 +15,7 @@ let prompts = [];
 let categories = [];
 let selectedCategory = 'all';
 let editingPromptId = null;
+let shouldAnimate = false;
 
 // ─── DOM Elements ───────────────────────────────────────
 
@@ -54,9 +55,11 @@ function showToast(msg) {
 
 listen('panel-show', async () => {
   // Reload all data from Rust/SQLite state
+  shouldAnimate = true;
   await loadCategories();
   await loadHistory();
   await loadPrompts();
+  shouldAnimate = false;
   requestAnimationFrame(() => {
     panel.classList.add('active');
     searchInput.focus();
@@ -136,7 +139,7 @@ function renderHistory() {
   }
 
   historyList.innerHTML = items.map((item, i) => `
-    <div class="history-item ${item.pinned ? 'pinned' : ''}" data-id="${item.id}" style="animation-delay: ${i * 0.03}s">
+    <div class="history-item ${item.pinned ? 'pinned' : ''} ${shouldAnimate ? 'animate-in' : ''}" data-id="${item.id}" style="${shouldAnimate ? 'animation-delay:' + (i * 0.03) + 's' : ''}">
       <div class="item-content">${escapeHtml(item.preview)}</div>
       <div class="item-meta">
         <span class="item-time">${formatTime(item.timestamp)}</span>
@@ -264,7 +267,7 @@ function renderPrompts() {
     const cat = categories.find(c => c.id === p.categoryId);
     const catBadge = cat ? `<span class="prompt-category-badge" style="background:${cat.color}">${escapeHtml(cat.name)}</span>` : '';
     return `
-    <div class="prompt-item" data-id="${p.id}" style="animation-delay: ${i * 0.03}s">
+    <div class="prompt-item ${shouldAnimate ? 'animate-in' : ''}" data-id="${p.id}" style="${shouldAnimate ? 'animation-delay:' + (i * 0.03) + 's' : ''}">
       <div class="prompt-header">
         <span class="prompt-title">${escapeHtml(p.title)}</span>
         ${catBadge}

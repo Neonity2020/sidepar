@@ -207,6 +207,7 @@ body {
 .item-list {
   flex: 1;
   overflow-y: auto;
+  overflow-y: overlay;
   padding: 8px 12px;
 }
 
@@ -236,15 +237,13 @@ body {
   border-radius: var(--radius-md);
   margin-bottom: 6px;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
   position: relative;
-  animation: itemSlideIn 0.25s ease forwards;
 }
 
 .history-item:hover {
   background: var(--bg-hover);
   border-color: rgba(255, 255, 255, 0.12);
-  transform: translateX(-2px);
 }
 
 .history-item.pinned {
@@ -318,14 +317,12 @@ body {
   border-radius: var(--radius-md);
   margin-bottom: 6px;
   cursor: pointer;
-  transition: all var(--transition-fast);
-  animation: itemSlideIn 0.25s ease forwards;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
 }
 
 .prompt-item:hover {
   background: var(--bg-hover);
   border-color: rgba(255, 255, 255, 0.12);
-  transform: translateX(-2px);
 }
 
 .prompt-item .prompt-header {
@@ -758,6 +755,11 @@ body {
 }
 
 /* ─── Animations ─────────────────────────────────────── */
+
+.history-item.animate-in,
+.prompt-item.animate-in {
+  animation: itemSlideIn 0.25s ease forwards;
+}
 
 @keyframes itemSlideIn {
   from {
