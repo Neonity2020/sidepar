@@ -68,6 +68,10 @@ listen('panel-show', async () => {
 
 listen('panel-hide', () => {
   panel.classList.remove('active');
+  // 主动移除焦点，防止 macOS 输入法在窗口隐藏时报错 (IMKCFRunLoopWakeUpReliable)
+  if (document.activeElement && typeof document.activeElement.blur === 'function') {
+    document.activeElement.blur();
+  }
 });
 
 // ─── Tab Switching ──────────────────────────────────────
